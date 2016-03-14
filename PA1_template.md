@@ -22,15 +22,32 @@ list.files(path = "/Users/ramyabalasubramaniam")
 ```
 
 ```
-##  [1] "addPatt.R"         "Applications"      "ass1.R"           
-##  [4] "data_activity"     "data_activity.zip" "Desktop"          
-##  [7] "Documents"         "Downloads"         "example_plot"     
-## [10] "figure"            "GitHub"            "hist_total.png"   
-## [13] "impact_impact.png" "java.log.3701"     "Library"          
-## [16] "Movies"            "Music"             "newhist_comp.png" 
-## [19] "PA1_template.html" "PA1_template.md"   "PA1_template.Rmd" 
-## [22] "Pattern_Week.png"  "Pictures"          "Public"           
-## [25] "R files"           "SOFTWARE"          "TS_avgsteps.png"
+##  [1] "addPatt.R"                         
+##  [2] "Applications"                      
+##  [3] "ass1.R"                            
+##  [4] "data_activity"                     
+##  [5] "data_activity.zip"                 
+##  [6] "Desktop"                           
+##  [7] "Documents"                         
+##  [8] "Downloads"                         
+##  [9] "example_plot"                      
+## [10] "figure"                            
+## [11] "GitHub"                            
+## [12] "hist_total.png"                    
+## [13] "impact_impact.png"                 
+## [14] "java.log.3701"                     
+## [15] "Library"                           
+## [16] "Movies"                            
+## [17] "Music"                             
+## [18] "newhist_comp.png"                  
+## [19] "PA1_template.Rmd"                  
+## [20] "Pattern_Week.png"                  
+## [21] "Pictures"                          
+## [22] "Public"                            
+## [23] "R files"                           
+## [24] "RepData_PeerAssessment1 3.07.46 pm"
+## [25] "SOFTWARE"                          
+## [26] "TS_avgsteps.png"
 ```
 
 ```r
@@ -48,10 +65,15 @@ output:[1] 10395
 
 ```r
 tot_steps <- tapply(act$steps,as.factor(act$date),sum, na.rm= T)
+png(filename = "hist_total.png")
 hist(tot_steps,main = "Total no. of Steps per day", xlab = "Step Classes", ylab = "Frequency")
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+```
+## quartz_off_screen 
+##                 2
+```
 
 ```r
 mean(tot_steps)
@@ -77,10 +99,15 @@ output: index -> 104 (interval number:835), value -> 206.1698
 
 ```r
 avg_steps <- tapply(act$steps, INDEX = as.factor(act$interval),mean, na.rm =T)
+png(filename = "TS_avgsteps.png")
 plot(x = names(avg_steps),y = avg_steps,main = "average steps taken for an interval", xlab = "interval no.", ylab = "average no. of steps", type= "l", pch = 3, lwd = 2,col ="blue")
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+```
+## quartz_off_screen 
+##                 2
+```
 
 ```r
 index = which(avg_steps == max(avg_steps))
@@ -130,12 +157,17 @@ for (i in 1:nrow(act))
  }
 new_act <- data.frame(steps = new_steps, date = act$date, interval = act$interval)
 ntot_steps <- tapply(new_act$steps,as.factor(new_act$date),sum, na.rm= T) 
+png(filename = "newhist_comp.png")
 par(mfrow = c(2,1))
 hist(tot_steps,main = "Total no. of Steps per day(with NA)", xlab = "Old Step Classes", ylab = "Frequency")
 hist(ntot_steps,main = "Total no. of Steps per day(w/o NA)", xlab = "new Step Classes", ylab = "Frequency")
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+```
+## quartz_off_screen 
+##                 2
+```
 
 ```r
 mean(ntot_steps)
@@ -154,12 +186,17 @@ median(ntot_steps)
 ```
 
 ```r
+png("impact_impact.png")
 par(mfrow= c(2,1))
 barplot(tot_steps,main = "total steps w/o imputation", xlab = "day number",ylab ="total steps per day")
  barplot(ntot_steps,main = "total steps with imputation", xlab = "day number",ylab ="total steps per day")
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-2.png)
+```
+## quartz_off_screen 
+##                 2
+```
 
 ## Show the pattern for the averages calulated across the five-minute intervals differentiated for weekdays and weekends
 1. Create a new column in the new dataset indicating type of day - weekday or weekend (factor type values)
@@ -180,8 +217,13 @@ for(i in 1:nrow(new_act))
 }
 Day_type <- as.factor(Day_type)
 new_act <- cbind(new_act,Day_type)
+png(filename = "Pattern_Week.png")
 xyplot(steps ~ interval| Day_type, data = aggregate(steps ~ Day_type + interval, data = new_act, sum), type= "l",ylab = "no of steps", xlab ="interval number", main ="pattern over weekdays & weekends",layout = c(1,2))
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+```
+## quartz_off_screen 
+##                 2
+```
 
