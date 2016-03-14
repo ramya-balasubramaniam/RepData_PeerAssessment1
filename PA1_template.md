@@ -13,9 +13,31 @@ output: html_document
 3. Unzip the file in destination folder "data_activity"
 4. Load the .csv file in R object "act" (dataframe)
 
-```{r, echo = TRUE}
+
+```r
 download.file(url= "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",destfile= "data_activity.zip",method = "curl")
 list.files(path = "/Users/ramyabalasubramaniam")
+```
+
+```
+##  [1] "addPatt.R"               "Applications"           
+##  [3] "ass1.R"                  "data_activity"          
+##  [5] "data_activity.zip"       "Desktop"                
+##  [7] "Documents"               "Downloads"              
+##  [9] "example_plot"            "figure"                 
+## [11] "GitHub"                  "hist_total.png"         
+## [13] "impact_impact.png"       "java.log.3701"          
+## [15] "Library"                 "Movies"                 
+## [17] "Music"                   "newhist_comp.png"       
+## [19] "PA1_template.html"       "PA1_template.md"        
+## [21] "PA1_template.Rmd"        "Pattern_Week.png"       
+## [23] "Pictures"                "Public"                 
+## [25] "R files"                 "RepData_PeerAssessment1"
+## [27] "rsconnect"               "SOFTWARE"               
+## [29] "TS_avgsteps.png"
+```
+
+```r
 unzip(zipfile = "/Users/ramyabalasubramaniam/data_activity.zip",exdir = "data_activity")
 act <- read.csv(file = "data_activity/activity.csv")
 ```
@@ -27,13 +49,33 @@ output:[1] 9354.23
 4. Calculate the median -
 output:[1] 10395
 
-```{r, echo = TRUE}
+
+```r
 tot_steps <- tapply(act$steps,as.factor(act$date),sum, na.rm= T)
 png(filename = "hist_total.png")
 hist(tot_steps,main = "Total no. of Steps per day", xlab = "Step Classes", ylab = "Frequency")
 dev.off()
+```
+
+```
+## quartz_off_screen 
+##                 2
+```
+
+```r
 mean(tot_steps)
+```
+
+```
+## [1] 9354.23
+```
+
+```r
 median(tot_steps)
+```
+
+```
+## [1] 10395
 ```
 ## Show the average pattern across the different intervals
 1. Calculate the average number of steps taken, averaged across all days for a particular 5-minute interval
@@ -41,15 +83,44 @@ median(tot_steps)
 3. Calculate the interval for which the value is maximum and what is that value 
 output: index -> 104 (interval number:835), value -> 206.1698 
 
-```{r , echo= TRUE}
+
+```r
 avg_steps <- tapply(act$steps, INDEX = as.factor(act$interval),mean, na.rm =T)
 png(filename = "TS_avgsteps.png")
 plot(x = names(avg_steps),y = avg_steps,main = "average steps taken for an interval", xlab = "interval no.", ylab = "average no. of steps", type= "l", pch = 3, lwd = 2,col ="blue")
 dev.off()
+```
+
+```
+## quartz_off_screen 
+##                 2
+```
+
+```r
 index = which(avg_steps == max(avg_steps))
 index
+```
+
+```
+## 835 
+## 104
+```
+
+```r
 max(avg_steps)
+```
+
+```
+## [1] 206.1698
+```
+
+```r
 avg_steps[index]
+```
+
+```
+##      835 
+## 206.1698
 ```
 ## Imput the missing values
 1. Create a new data vector for the 17568 value replacing NA values with average value for that 5-minute interval
@@ -60,7 +131,8 @@ avg_steps[index]
 output: mean [1] 10766.19
 median [1] 10766.19
 6. Make a barplot of the same using old and new dataset to see the effect on individual values
-```{r, echo = TRUE}
+
+```r
 new_steps <- vector(length = nrow(act))
 for (i in 1:nrow(act))
 {
@@ -77,8 +149,30 @@ par(mfrow = c(2,1))
 hist(tot_steps,main = "Total no. of Steps per day(with NA)", xlab = "Old Step Classes", ylab = "Frequency")
 hist(ntot_steps,main = "Total no. of Steps per day(w/o NA)", xlab = "new Step Classes", ylab = "Frequency")
 dev.off()
+```
+
+```
+## quartz_off_screen 
+##                 2
+```
+
+```r
 mean(ntot_steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(ntot_steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 png("impact_impact.png")
 par(mfrow= c(2,1))
 barplot(tot_steps,main = "total steps w/o imputation", xlab = "day number",ylab ="total steps per day")
@@ -86,11 +180,17 @@ barplot(tot_steps,main = "total steps w/o imputation", xlab = "day number",ylab 
 dev.off()
 ```
 
+```
+## quartz_off_screen 
+##                 2
+```
+
 ## Show the pattern for the averages calulated across the five-minute intervals differentiated for weekdays and weekends
 1. Create a new column in the new dataset indicating type of day - weekday or weekend (factor type values)
 2. Plot the total number of steps for the new dataset categorizing using this new factor variable- weekday or weekend
 
-```{r, echo = TRUE}
+
+```r
 Day <- weekdays(as.Date(new_act$date))
 new_act <- cbind(new_act,Day)
 Day_type <- vector(mode= "character",length = nrow(new_act))

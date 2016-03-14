@@ -127,9 +127,24 @@ $(document).ready(function () {
 <li>Unzip the file in destination folder “data_activity”</li>
 <li>Load the .csv file in R object “act” (dataframe)</li>
 </ol>
-<pre class="load"><code>download.file(url= &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;,destfile= &quot;data_activity.zip&quot;,method = &quot;curl&quot;)
-list.files(path = &quot;/Users/ramyabalasubramaniam&quot;)
-unzip(zipfile = &quot;/Users/ramyabalasubramaniam/data_activity.zip&quot;,exdir = &quot;data_activity&quot;)
+<pre class="r"><code>download.file(url= &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;,destfile= &quot;data_activity.zip&quot;,method = &quot;curl&quot;)
+list.files(path = &quot;/Users/ramyabalasubramaniam&quot;)</code></pre>
+<pre><code>##  [1] &quot;addPatt.R&quot;               &quot;Applications&quot;           
+##  [3] &quot;ass1.R&quot;                  &quot;data_activity&quot;          
+##  [5] &quot;data_activity.zip&quot;       &quot;Desktop&quot;                
+##  [7] &quot;Documents&quot;               &quot;Downloads&quot;              
+##  [9] &quot;example_plot&quot;            &quot;figure&quot;                 
+## [11] &quot;GitHub&quot;                  &quot;hist_total.png&quot;         
+## [13] &quot;impact_impact.png&quot;       &quot;java.log.3701&quot;          
+## [15] &quot;Library&quot;                 &quot;Movies&quot;                 
+## [17] &quot;Music&quot;                   &quot;newhist_comp.png&quot;       
+## [19] &quot;PA1_template.html&quot;       &quot;PA1_template.md&quot;        
+## [21] &quot;PA1_template.Rmd&quot;        &quot;Pattern_Week.png&quot;       
+## [23] &quot;Pictures&quot;                &quot;Public&quot;                 
+## [25] &quot;R files&quot;                 &quot;RepData_PeerAssessment1&quot;
+## [27] &quot;rsconnect&quot;               &quot;SOFTWARE&quot;               
+## [29] &quot;TS_avgsteps.png&quot;</code></pre>
+<pre class="r"><code>unzip(zipfile = &quot;/Users/ramyabalasubramaniam/data_activity.zip&quot;,exdir = &quot;data_activity&quot;)
 act &lt;- read.csv(file = &quot;data_activity/activity.csv&quot;)</code></pre>
 </div>
 <div id="calculate-the-total-number-of-steps-taken-per-day---mean-median-of-this-data" class="section level2">
@@ -140,12 +155,16 @@ act &lt;- read.csv(file = &quot;data_activity/activity.csv&quot;)</code></pre>
 <li>Calculate the mean - output:[1] 9354.23</li>
 <li>Calculate the median - output:[1] 10395</li>
 </ol>
-<pre class="calculate"><code>tot_steps &lt;- tapply(act$steps,as.factor(act$date),sum, na.rm= T)
+<pre class="r"><code>tot_steps &lt;- tapply(act$steps,as.factor(act$date),sum, na.rm= T)
 png(filename = &quot;hist_total.png&quot;)
 hist(tot_steps,main = &quot;Total no. of Steps per day&quot;, xlab = &quot;Step Classes&quot;, ylab = &quot;Frequency&quot;)
-dev.off()
-mean(tot_steps)
-median(tot_steps)</code></pre>
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>mean(tot_steps)</code></pre>
+<pre><code>## [1] 9354.23</code></pre>
+<pre class="r"><code>median(tot_steps)</code></pre>
+<pre><code>## [1] 10395</code></pre>
 </div>
 <div id="show-the-average-pattern-across-the-different-intervals" class="section level2">
 <h2>Show the average pattern across the different intervals</h2>
@@ -154,14 +173,21 @@ median(tot_steps)</code></pre>
 <li>Make a time-series plot of the same</li>
 <li>Calculate the interval for which the value is maximum and what is that value output: index -&gt; 104 (interval number:835), value -&gt; 206.1698</li>
 </ol>
-<pre class="average"><code>avg_steps &lt;- tapply(act$steps, INDEX = as.factor(act$interval),mean, na.rm =T)
+<pre class="r"><code>avg_steps &lt;- tapply(act$steps, INDEX = as.factor(act$interval),mean, na.rm =T)
 png(filename = &quot;TS_avgsteps.png&quot;)
 plot(x = names(avg_steps),y = avg_steps,main = &quot;average steps taken for an interval&quot;, xlab = &quot;interval no.&quot;, ylab = &quot;average no. of steps&quot;, type= &quot;l&quot;, pch = 3, lwd = 2,col =&quot;blue&quot;)
-dev.off()
-index = which(avg_steps == max(avg_steps))
-index
-max(avg_steps)
-avg_steps[index]</code></pre>
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>index = which(avg_steps == max(avg_steps))
+index</code></pre>
+<pre><code>## 835 
+## 104</code></pre>
+<pre class="r"><code>max(avg_steps)</code></pre>
+<pre><code>## [1] 206.1698</code></pre>
+<pre class="r"><code>avg_steps[index]</code></pre>
+<pre><code>##      835 
+## 206.1698</code></pre>
 </div>
 <div id="imput-the-missing-values" class="section level2">
 <h2>Imput the missing values</h2>
@@ -173,8 +199,8 @@ avg_steps[index]</code></pre>
 <li>Calculate the mean and median of total number of steps per day using the new dataset output: mean [1] 10766.19 median [1] 10766.19</li>
 <li>Make a barplot of the same using old and new dataset to see the effect on individual values</li>
 </ol>
-<pre class="impute"><code>new_steps &lt;- vector(length = nrow(act))
-or (i in 1:nrow(act))
+<pre class="r"><code>new_steps &lt;- vector(length = nrow(act))
+for (i in 1:nrow(act))
 {
      if (is.na(act[i,1]))
      {
@@ -188,14 +214,20 @@ png(filename = &quot;newhist_comp.png&quot;)
 par(mfrow = c(2,1))
 hist(tot_steps,main = &quot;Total no. of Steps per day(with NA)&quot;, xlab = &quot;Old Step Classes&quot;, ylab = &quot;Frequency&quot;)
 hist(ntot_steps,main = &quot;Total no. of Steps per day(w/o NA)&quot;, xlab = &quot;new Step Classes&quot;, ylab = &quot;Frequency&quot;)
-dev.off()
-mean(ntot_steps)
-median(ntot_steps)
-png(&quot;impact_impact.png&quot;)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>mean(ntot_steps)</code></pre>
+<pre><code>## [1] 10766.19</code></pre>
+<pre class="r"><code>median(ntot_steps)</code></pre>
+<pre><code>## [1] 10766.19</code></pre>
+<pre class="r"><code>png(&quot;impact_impact.png&quot;)
 par(mfrow= c(2,1))
 barplot(tot_steps,main = &quot;total steps w/o imputation&quot;, xlab = &quot;day number&quot;,ylab =&quot;total steps per day&quot;)
  barplot(ntot_steps,main = &quot;total steps with imputation&quot;, xlab = &quot;day number&quot;,ylab =&quot;total steps per day&quot;)
 dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
 </div>
 <div id="show-the-pattern-for-the-averages-calulated-across-the-five-minute-intervals-differentiated-for-weekdays-and-weekends" class="section level2">
 <h2>Show the pattern for the averages calulated across the five-minute intervals differentiated for weekdays and weekends</h2>
@@ -203,7 +235,7 @@ dev.off()</code></pre>
 <li>Create a new column in the new dataset indicating type of day - weekday or weekend (factor type values)</li>
 <li>Plot the total number of steps for the new dataset categorizing using this new factor variable- weekday or weekend</li>
 </ol>
-<pre class="pattern"><code>Day &lt;- weekdays(as.Date(new_act$date))
+<pre class="r"><code>Day &lt;- weekdays(as.Date(new_act$date))
 new_act &lt;- cbind(new_act,Day)
 Day_type &lt;- vector(mode= &quot;character&quot;,length = nrow(new_act))
 for(i in 1:nrow(new_act))
