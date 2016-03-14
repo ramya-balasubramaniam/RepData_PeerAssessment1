@@ -127,7 +127,10 @@ $(document).ready(function () {
 <li>Unzip the file in destination folder “data_activity”</li>
 <li>Load the .csv file in R object “act” (dataframe)</li>
 </ol>
-<pre class="r"><code>download.file(url= &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;,destfile= &quot;data_activity.zip&quot;,method = &quot;curl&quot;)
+<pre class="r"><code>library(knitr)</code></pre>
+<pre><code>## Warning: package 'knitr' was built under R version 3.2.3</code></pre>
+<pre class="r"><code>library(lattice)
+download.file(url= &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;,destfile= &quot;data_activity.zip&quot;,method = &quot;curl&quot;)
 list.files(path = &quot;/Users/ramyabalasubramaniam&quot;)</code></pre>
 <pre><code>##  [1] &quot;addPatt.R&quot;               &quot;Applications&quot;           
 ##  [3] &quot;ass1.R&quot;                  &quot;data_activity&quot;          
@@ -247,7 +250,12 @@ for(i in 1:nrow(new_act))
    else Day_type[i] &lt;- &quot;Weekend&quot;
 }
 Day_type &lt;- as.factor(Day_type)
-new_act &lt;- cbind(new_act,Day_type)</code></pre>
+new_act &lt;- cbind(new_act,Day_type)
+png(filename = &quot;Pattern_Week.png&quot;)
+xyplot(steps ~ interval| Day_type, data = aggregate(steps ~ Day_type + interval, data = new_act, sum), type= &quot;l&quot;,ylab = &quot;no of steps&quot;, xlab =&quot;interval number&quot;, main =&quot;pattern over weekdays &amp; weekends&quot;,layout = c(1,2))
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
 </div>
 
 

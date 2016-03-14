@@ -15,6 +15,8 @@ output: html_document
 
 
 ```r
+library(knitr)
+library(lattice)
 download.file(url= "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",destfile= "data_activity.zip",method = "curl")
 list.files(path = "/Users/ramyabalasubramaniam")
 ```
@@ -204,5 +206,13 @@ for(i in 1:nrow(new_act))
 }
 Day_type <- as.factor(Day_type)
 new_act <- cbind(new_act,Day_type)
+png(filename = "Pattern_Week.png")
+xyplot(steps ~ interval| Day_type, data = aggregate(steps ~ Day_type + interval, data = new_act, sum), type= "l",ylab = "no of steps", xlab ="interval number", main ="pattern over weekdays & weekends",layout = c(1,2))
+dev.off()
+```
+
+```
+## quartz_off_screen 
+##                 2
 ```
 
