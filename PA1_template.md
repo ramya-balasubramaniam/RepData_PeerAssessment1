@@ -29,9 +29,8 @@ list.files(path = "/Users/ramyabalasubramaniam")
 ## [13] "impact_impact.png" "java.log.3701"     "Library"          
 ## [16] "Movies"            "Music"             "newhist_comp.png" 
 ## [19] "PA1_template.html" "PA1_template.md"   "PA1_template.Rmd" 
-## [22] "PA2_template.html" "PA2_template.Rmd"  "Pattern_Week.png" 
-## [25] "Pictures"          "Public"            "R files"          
-## [28] "SOFTWARE"          "TS_avgsteps.png"
+## [22] "Pattern_Week.png"  "Pictures"          "Public"           
+## [25] "R files"           "SOFTWARE"          "TS_avgsteps.png"
 ```
 
 ```r

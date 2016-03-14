@@ -132,21 +132,15 @@ $(document).ready(function () {
 <pre class="r"><code>library(lattice)
 download.file(url= &quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;,destfile= &quot;data_activity.zip&quot;,method = &quot;curl&quot;)
 list.files(path = &quot;/Users/ramyabalasubramaniam&quot;)</code></pre>
-<pre><code>##  [1] &quot;addPatt.R&quot;               &quot;Applications&quot;           
-##  [3] &quot;ass1.R&quot;                  &quot;data_activity&quot;          
-##  [5] &quot;data_activity.zip&quot;       &quot;Desktop&quot;                
-##  [7] &quot;Documents&quot;               &quot;Downloads&quot;              
-##  [9] &quot;example_plot&quot;            &quot;figure&quot;                 
-## [11] &quot;GitHub&quot;                  &quot;hist_total.png&quot;         
-## [13] &quot;impact_impact.png&quot;       &quot;java.log.3701&quot;          
-## [15] &quot;Library&quot;                 &quot;Movies&quot;                 
-## [17] &quot;Music&quot;                   &quot;newhist_comp.png&quot;       
-## [19] &quot;PA1_template.html&quot;       &quot;PA1_template.md&quot;        
-## [21] &quot;PA1_template.Rmd&quot;        &quot;PA2_template.Rmd&quot;       
-## [23] &quot;Pattern_Week.png&quot;        &quot;Pictures&quot;               
-## [25] &quot;Public&quot;                  &quot;R files&quot;                
-## [27] &quot;RepData_PeerAssessment1&quot; &quot;SOFTWARE&quot;               
-## [29] &quot;TS_avgsteps.png&quot;</code></pre>
+<pre><code>##  [1] &quot;addPatt.R&quot;         &quot;Applications&quot;      &quot;ass1.R&quot;           
+##  [4] &quot;data_activity&quot;     &quot;data_activity.zip&quot; &quot;Desktop&quot;          
+##  [7] &quot;Documents&quot;         &quot;Downloads&quot;         &quot;example_plot&quot;     
+## [10] &quot;figure&quot;            &quot;GitHub&quot;            &quot;hist_total.png&quot;   
+## [13] &quot;impact_impact.png&quot; &quot;java.log.3701&quot;     &quot;Library&quot;          
+## [16] &quot;Movies&quot;            &quot;Music&quot;             &quot;newhist_comp.png&quot; 
+## [19] &quot;PA1_template.html&quot; &quot;PA1_template.md&quot;   &quot;PA1_template.Rmd&quot; 
+## [22] &quot;Pattern_Week.png&quot;  &quot;Pictures&quot;          &quot;Public&quot;           
+## [25] &quot;R files&quot;           &quot;SOFTWARE&quot;          &quot;TS_avgsteps.png&quot;</code></pre>
 <pre class="r"><code>unzip(zipfile = &quot;/Users/ramyabalasubramaniam/data_activity.zip&quot;,exdir = &quot;data_activity&quot;)
 act &lt;- read.csv(file = &quot;data_activity/activity.csv&quot;)</code></pre>
 </div>
