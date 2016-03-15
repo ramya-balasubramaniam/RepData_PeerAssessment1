@@ -29,11 +29,9 @@ output:[1] 9354.23
 4. Calculate the median -
 output:[1] 10395
 
-```{r, echo = TRUE}
+```{r TOTAL_STEPS, echo = TRUE}
 tot_steps <- tapply(act$steps,as.factor(act$date),sum, na.rm= T)
-png(filename = "hist_total.png")
 hist(tot_steps,main = "Total no. of Steps per day", xlab = "Step Classes", ylab = "Frequency")
-dev.off()
 mean(tot_steps)
 median(tot_steps)
 ```
@@ -43,11 +41,9 @@ median(tot_steps)
 3. Calculate the interval for which the value is maximum and what is that value 
 output: index -> 104 (interval number:835), value -> 206.1698 
 
-```{r , echo= TRUE}
+```{r AVG_STEPS, echo= TRUE}
 avg_steps <- tapply(act$steps, INDEX = as.factor(act$interval),mean, na.rm =T)
-png(filename = "TS_avgsteps.png")
 plot(x = names(avg_steps),y = avg_steps,main = "average steps taken for an interval", xlab = "interval no.", ylab = "average no. of steps", type= "l", pch = 3, lwd = 2,col ="blue")
-dev.off()
 index = which(avg_steps == max(avg_steps))
 index
 max(avg_steps)
@@ -62,7 +58,7 @@ avg_steps[index]
 output: mean [1] 10766.19
 median [1] 10766.19
 6. Make a barplot of the same using old and new dataset to see the effect on individual values
-```{r, echo = TRUE}
+```{r CMPR_WNA , echo = TRUE}
 new_steps <- vector(length = nrow(act))
 for (i in 1:nrow(act))
 {
@@ -74,25 +70,21 @@ for (i in 1:nrow(act))
  }
 new_act <- data.frame(steps = new_steps, date = act$date, interval = act$interval)
 ntot_steps <- tapply(new_act$steps,as.factor(new_act$date),sum, na.rm= T) 
-png(filename = "newhist_comp.png")
 par(mfrow = c(2,1))
 hist(tot_steps,main = "Total no. of Steps per day(with NA)", xlab = "Old Step Classes", ylab = "Frequency")
 hist(ntot_steps,main = "Total no. of Steps per day(w/o NA)", xlab = "new Step Classes", ylab = "Frequency")
-dev.off()
 mean(ntot_steps)
 median(ntot_steps)
-png("impact_impact.png")
 par(mfrow= c(2,1))
 barplot(tot_steps,main = "total steps w/o imputation", xlab = "day number",ylab ="total steps per day")
  barplot(ntot_steps,main = "total steps with imputation", xlab = "day number",ylab ="total steps per day")
-dev.off()
 ```
 
 ## Show the pattern for the averages calulated across the five-minute intervals differentiated for weekdays and weekends
 1. Create a new column in the new dataset indicating type of day - weekday or weekend (factor type values)
 2. Plot the total number of steps for the new dataset categorizing using this new factor variable- weekday or weekend
 
-```{r, echo = TRUE}
+```{r PAT_WEEK, echo = TRUE}
 Day <- weekdays(as.Date(new_act$date))
 new_act <- cbind(new_act,Day)
 Day_type <- vector(mode= "character",length = nrow(new_act))
@@ -106,8 +98,6 @@ for(i in 1:nrow(new_act))
 }
 Day_type <- as.factor(Day_type)
 new_act <- cbind(new_act,Day_type)
-png(filename = "Pattern_Week.png")
 xyplot(steps ~ interval| Day_type, data = aggregate(steps ~ Day_type + interval, data = new_act, sum), type= "l",ylab = "no of steps", xlab ="interval number", main ="pattern over weekdays & weekends",layout = c(1,2))
-dev.off()
 ```
 
