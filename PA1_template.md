@@ -5,17 +5,16 @@ date: "13 March 2016"
 output: html_document
 ---
 
-### This is an R Markdown document for processing the output as described in the assignment using the Activity.zip archive file downloaded from the url "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip". This document gives a step by step description of the process of computation of the desired results.
+### This document gives a step by step description of the process of computation of the desired results.
 
 ##loading and preprocessing the data
-1. Download the file from the url
-2. list the files in the working directory to ensure file is downloaded
+1. Download file from url
+2. list files in working directory to ensure file is downloaded
 3. Unzip the file in destination folder "data_activity"
-4. Load the .csv file in R object "act" (dataframe)
+4. Load .csv file in R object "act" (dataframe)
 
 
 ```r
-library(knitr)
 library(lattice)
 download.file(url= "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",destfile= "data_activity.zip",method = "curl")
 list.files(path = "/Users/ramyabalasubramaniam")
@@ -33,24 +32,20 @@ list.files(path = "/Users/ramyabalasubramaniam")
 ## [17] "Music"                   "newhist_comp.png"       
 ## [19] "PA1_template.html"       "PA1_template.md"        
 ## [21] "PA1_template.Rmd"        "PA2_template.html"      
-## [23] "PA2_template.md"         "PA2_template.Rmd"       
-## [25] "Pattern_Week.png"        "Pictures"               
-## [27] "Public"                  "R files"                
-## [29] "RepData_PeerAssessment1" "SOFTWARE"               
-## [31] "TS_avgsteps.png"
+## [23] "PA2_template.Rmd"        "Pattern_Week.png"       
+## [25] "Pictures"                "Public"                 
+## [27] "R files"                 "RepData_PeerAssessment1"
+## [29] "SOFTWARE"                "TS_avgsteps.png"
 ```
 
 ```r
 unzip(zipfile = "/Users/ramyabalasubramaniam/data_activity.zip",exdir = "data_activity")
 act <- read.csv(file = "data_activity/activity.csv")
 ```
-## Calculate the total number of steps taken per day - Mean & median of this data
-1. Calculate the total number of steps covered each of the 61 days
-2. Plot the histogram save it as .png file
-3. Calculate the mean - 
-output:[1] 9354.23
-4. Calculate the median -
-output:[1] 10395
+## Calculate total number of steps taken per day - Mean & median of this data
+1. Calculate total number of steps covered each of the 61 days and plot histogram 
+2. Calculate the mean
+3. Calculate the median
 
 
 ```r
@@ -75,11 +70,9 @@ median(tot_steps)
 ```
 ## [1] 10395
 ```
-## Show the average pattern across the different intervals
-1. Calculate the average number of steps taken, averaged across all days for a particular 5-minute interval
-2. Make a time-series plot of the same
-3. Calculate the interval for which the value is maximum and what is that value 
-output: index -> 104 (interval number:835), value -> 206.1698 
+## Show average pattern across different intervals
+1. Calculate average number of steps taken, averaged across all days for a particular 5-minute interval and make time-series plot
+2. Calculate interval for which value is maximum and display value
 
 
 ```r
@@ -115,15 +108,11 @@ avg_steps[index]
 ##      835 
 ## 206.1698
 ```
-## Imput the missing values
-1. Create a new data vector for the 17568 value replacing NA values with average value for that 5-minute interval
-2. Combine this vector to a new dataset with the other two column values same as the original dataset
-3. Calculate and plot the histogram of the total numer of steps per day for the new dataset
-4. Also plot the two histograms together (using old and new dataset to see the effect on the overall values
-5. Calculate the mean and median of total number of steps per day using the new dataset
-output: mean [1] 10766.19
-median [1] 10766.19
-6. Make a barplot of the same using old and new dataset to see the effect on individual values
+## Imput missing values
+1. Create a new data vector for 17568 value replacing NA values with average value for that 5-minute interval and combine this vector to a new dataset with other two column values same as original dataset
+2. Calculate and plot the histogram of total numer of steps per day for new dataset. Plot the other histogram with old dataset simultaneously.
+3. Calculate mean and median of total number of steps per day using new dataset and make a barplot of total number of steps using old and new dataset.
+
 
 ```r
 new_steps <- vector(length = nrow(act))
@@ -169,8 +158,7 @@ barplot(tot_steps,main = "total steps w/o imputation", xlab = "day number",ylab 
 ![plot of chunk CMPR_WNA ](figure/CMPR_WNA -2.png)
 
 ## Show the pattern for the averages calulated across the five-minute intervals differentiated for weekdays and weekends
-1. Create a new column in the new dataset indicating type of day - weekday or weekend (factor type values)
-2. Plot the total number of steps for the new dataset categorizing using this new factor variable- weekday or weekend
+Create a new column in new dataset indicating type of day - weekday or weekend (factor type values) and plot pattern shown according to this new factor variable.
 
 
 ```r
